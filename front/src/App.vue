@@ -124,6 +124,10 @@ export default {
 
     }
   },
+
+  created() {
+    this.API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  },
   
   computed: {
     articlesFiltres() {
@@ -177,7 +181,7 @@ export default {
     
     async chargerListe() {
       try {
-        const response = await fetch('http://localhost:3000/api/liste');
+        const response = await fetch(`${this.API_URL}/api/liste`);
         const data = await response.json();
         this.liste = data;
         this.listeOriginale = JSON.parse(JSON.stringify(data));
@@ -195,7 +199,7 @@ export default {
         const nouvelObjet = { nom, quantité: quantite, acheté: false, catégorie: categorie };
 
         try {
-          const response = await fetch('http://localhost:3000/api/liste', {
+          const response = await fetch(`${this.API_URL}/api/liste`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(nouvelObjet)
@@ -216,7 +220,7 @@ export default {
     
     async supprimerArticle(id) {
       try {
-  const response = await fetch(`http://localhost:3000/api/liste/${id}`, {
+  const response = await fetch(`${this.API_URL}/api/liste/${id}`, {
     method: 'DELETE'
   });
 
@@ -241,7 +245,7 @@ export default {
       const modele = this.creerObjetModele(nom);
 
       try {
-        const response = await fetch("http://localhost:3000/api/modeles", {
+        const response = await fetch(`${this.API_URL}/api/modeles`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(modele)
@@ -288,7 +292,7 @@ export default {
   };
 
   try {
-    const response = await fetch(`http://localhost:3000/api/modeles/${this.modeleSelectionne}`, {
+    const response = await fetch(`${this.API_URL}/api/modeles/${this.modeleSelectionne}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(modeleMAJ)
@@ -313,7 +317,7 @@ export default {
     async supprimerModele() {
       
       try {
-        const response = await fetch(`http://localhost:3000/api/modeles/${this.modeleSelectionne}?userId=demo`, {
+        const response = await fetch(`${this.API_URL}/api/modeles/${this.modeleSelectionne}?userId=demo`, {
   method: "DELETE"
 });
 
@@ -353,7 +357,7 @@ export default {
       };
 
       try {
-        const response = await fetch(`http://localhost:3000/api/liste/${article._id}`, {
+        const response = await fetch(`${this.API_URL}/api/liste/${article._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(majArticle)
@@ -380,7 +384,7 @@ export default {
       };
 
       try {
-        const response = await fetch('http://localhost:3000/api/liste', {
+        const response = await fetch('${this.API_URL}/api/liste', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(copie)
@@ -398,7 +402,7 @@ export default {
     
     async chargerModeles() {
       try {
-        const response = await fetch('http://localhost:3000/api/modeles/demo');
+        const response = await fetch('${this.API_URL}/api/modeles/demo');
         if (response.ok) {
           const data = await response.json();
           this.modeles = data;
@@ -410,7 +414,7 @@ export default {
 
     async viderListe() {
       try {
-        await fetch('http://localhost:3000/api/liste', { method: 'DELETE' });
+        await fetch('${this.API_URL}/api/liste', { method: 'DELETE' });
         this.liste = [];
         this.listeOriginale = [];
       } catch (err) {
@@ -432,7 +436,7 @@ export default {
 
       // 1. Vider les articles côté serveur
       try {
-        await fetch('http://localhost:3000/api/liste', { method: 'DELETE' });
+        await fetch('${this.API_URL}/api/liste', { method: 'DELETE' });
       } catch (err) {
         console.error("Erreur lors du vidage de la liste :", err);
       }
@@ -441,7 +445,7 @@ export default {
       this.liste = [];
       for (const article of modele.articles) {
         try {
-          const response = await fetch('http://localhost:3000/api/liste', {
+          const response = await fetch('${this.API_URL}/api/liste', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ...article, acheté: false })
