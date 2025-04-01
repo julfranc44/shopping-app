@@ -52,6 +52,16 @@ app.post('/api/liste', async (req, res) => {
   }
 });
 
+// Supprimer tous les articles (vider toute la liste)
+app.delete('/api/liste', async (req, res) => {
+  try {
+    await Article.deleteMany({});
+    res.json({ message: 'Tous les articles ont été supprimés' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la suppression de tous les articles' });
+  }
+});
+
 
 // Supprimer un article par ID MongoDB
 app.delete('/api/liste/:id', async (req, res) => {
