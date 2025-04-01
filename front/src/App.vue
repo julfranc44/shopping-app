@@ -384,7 +384,7 @@ export default {
       };
 
       try {
-        const response = await fetch('${this.API_URL}/api/liste', {
+        const response = await fetch({`${this.API_URL}/api/liste`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(copie)
@@ -402,7 +402,7 @@ export default {
     
     async chargerModeles() {
       try {
-        const response = await fetch('${this.API_URL}/api/modeles/demo');
+        const response = await fetch(`${this.API_URL}/api/modeles/demo`);
         if (response.ok) {
           const data = await response.json();
           this.modeles = data;
@@ -414,7 +414,7 @@ export default {
 
     async viderListe() {
       try {
-        await fetch('${this.API_URL}/api/liste', { method: 'DELETE' });
+        await fetch(`${this.API_URL}/api/liste`, { method: 'DELETE' });
         this.liste = [];
         this.listeOriginale = [];
       } catch (err) {
@@ -436,7 +436,7 @@ export default {
 
       // 1. Vider les articles côté serveur
       try {
-        await fetch('${this.API_URL}/api/liste', { method: 'DELETE' });
+        await fetch(`${this.API_URL}/api/liste`, { method: 'DELETE' });
       } catch (err) {
         console.error("Erreur lors du vidage de la liste :", err);
       }
@@ -445,7 +445,7 @@ export default {
       this.liste = [];
       for (const article of modele.articles) {
         try {
-          const response = await fetch('${this.API_URL}/api/liste', {
+          const response = await fetch(`${this.API_URL}/api/liste`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ...article, acheté: false })
