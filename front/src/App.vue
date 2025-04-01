@@ -384,7 +384,7 @@ export default {
       };
 
       try {
-        const response = await fetch({`${this.API_URL}/api/liste`, {
+        const response = await fetch(`${this.API_URL}/api/liste`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(copie)
